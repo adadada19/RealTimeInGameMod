@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+//using System.Reflection.Emit;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -17,6 +18,7 @@ using Terraria.ModLoader.Config;
 using Terraria.ModLoader.UI;
 using MonoMod;
 using MonoMod.Cil;
+using Mono.Cecil.Cil;
 
 namespace RealTimeInGameMod
 {
@@ -29,10 +31,17 @@ namespace RealTimeInGameMod
             IL.Terraria.Player.ItemCheck += Player_ItemCheck;
         }
 
-        private void Player_ItemCheck(MonoMod.Cil.ILContext il)
+        private void Player_ItemCheck(ILContext il)
         {
             var c = new ILCursor(il);
-            //throw new System.NotImplementedException();
+            if (!c.TryGotoNext(i => i.MatchCallvirt<Mount>("SetMount")))
+                return;
+            c.TryGotoNext(i => i.MatchLdsfld<Main>("dayTime"));
+            c.Remove();
+            c.Emit(OpCodes.Ldc_I4_1);
+            c.Index += 1;
+            c.Remove();
+            c.Emit(OpCodes.Ldc_I4_1);
         }
 
         private void Main_DrawNPCChatButtons(On.Terraria.Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3)

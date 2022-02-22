@@ -11,18 +11,26 @@ using Terraria.ModLoader;
 
 namespace RealTimeInGameMod.Items
 {
-    class Sus : GlobalItem
+    class SuspiciousLookingEye : GlobalItem
     {
-        public override void AddRecipes()
+        public override bool UseItem(Item item, Player player)
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SuspiciousLookingEye>(), 1);
-            //recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(ItemID.SuspiciousLookingEye);
-            recipe.AddRecipe();
+            if (NPC.AnyNPCs(NPCID.EyeofCthulhu) == false && item.type == 43)
+            {
+                Main.PlaySound(SoundID.Roar, (int)item.position.X, (int)item.position.Y, 0);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, 4);
+                }
+                else
+                {
+                    NetMessage.SendData(MessageID.SpawnBoss, -1, -1, null, player.whoAmI, 4f);
+                }
+            }
+            return true;
         }
     }
-    class SuspiciousLookingEye : ModItem
+/*    class SuspiciousLookingEye : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -80,5 +88,5 @@ namespace RealTimeInGameMod.Items
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
-    }
+    }*/
 }
