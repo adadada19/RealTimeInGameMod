@@ -36,12 +36,17 @@ namespace RealTimeInGameMod
             var c = new ILCursor(il);
             if (!c.TryGotoNext(i => i.MatchCallvirt<Mount>("SetMount")))
                 return;
-            c.TryGotoNext(i => i.MatchLdsfld<Main>("dayTime"));
-            c.Remove();
-            c.Emit(OpCodes.Ldc_I4_1);
-            c.Index += 1;
-            c.Remove();
-            c.Emit(OpCodes.Ldc_I4_1);
+            for (int n = 0; n < 4; n++)
+            {
+                c.TryGotoNext(i => i.MatchLdsfld<Main>("dayTime"));
+                c.Remove();
+                c.Emit(OpCodes.Ldc_I4_1);
+                c.Index += 1;
+                c.Remove();
+                c.Emit(OpCodes.Ldc_I4_1);
+            }
+            // all this was for SusEye
+
         }
 
         private void Main_DrawNPCChatButtons(On.Terraria.Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3)

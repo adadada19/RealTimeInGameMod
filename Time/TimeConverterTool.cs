@@ -15,8 +15,8 @@ namespace RealTimeInGameMod.Time
         bool isTimeConverted = true;
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Time Converter");
-            DisplayName.SetDefault("Converts time to real and back");
+            DisplayName.SetDefault("Time Converter");
+            Tooltip.SetDefault("Converts time to real and back");
         }
         public override void SetDefaults()
         {

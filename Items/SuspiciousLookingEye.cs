@@ -17,10 +17,10 @@ namespace RealTimeInGameMod.Items
         {
             if (NPC.AnyNPCs(NPCID.EyeofCthulhu) == false && item.type == 43)
             {
-                Main.PlaySound(SoundID.Roar, (int)item.position.X, (int)item.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    NPC.SpawnOnPlayer(player.whoAmI, 4);
+                    NPC.SpawnOnPlayer(player.whoAmI, NPCID.EyeofCthulhu);
                 }
                 else
                 {
@@ -30,7 +30,7 @@ namespace RealTimeInGameMod.Items
             return true;
         }
     }
-/*    class SuspiciousLookingEye : ModItem
+/*    class SuspiciousLookingEye : ModItem it is here just not for writing something and just copiing from here
     {
         public override void SetStaticDefaults()
         {

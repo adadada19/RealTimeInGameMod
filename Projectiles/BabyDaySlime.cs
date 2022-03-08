@@ -48,7 +48,8 @@ namespace RealTimeInGameMod.Projectiles
 			Player player = Main.player[projectile.owner];
 			projectile.friendly = true;
             Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
-            if (Main.rand.NextBool(20))
+
+			if (Main.rand.NextBool(20))
             {
                 float xSpeed = Main.rand.NextFloat(-1f, 1f);
                 float ySpeed = Main.rand.NextFloat(-1f, 1f);

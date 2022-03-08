@@ -36,7 +36,7 @@ namespace RealTimeInGameMod.Items
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Main.NewText(String.Format("{0}", Lang.GetTooltip(ItemID.SuspiciousLookingEye)), Color.Lime);
+            Main.NewText(String.Format("{0}", WorldGen._lastSeed), Color.Lime);
             return false;
         }
     }
