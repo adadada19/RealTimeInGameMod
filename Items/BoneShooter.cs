@@ -21,24 +21,25 @@ namespace RealTimeInGameMod.Items
         }
         public override void SetDefaults()
         {
-            item.knockBack = 0f;
-            item.width = 66;
-            item.height = 50;
-            item.maxStack = 1;
-            item.rare = ItemRarityID.Expert;
-            item.melee = false;
             item.damage = 30;
-            item.magic = false;
             item.ranged = true;
-            item.mana = 0;
-            item.useAmmo = 154;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
+            item.width = 20;
+            item.height = 20;
             item.useTime = 10;
-            item.shootSpeed = 16f;
-            item.shootSpeed = 10.0f;
-            item.shoot = ModContent.ProjectileType<BoneProjectile>();
+            item.useAnimation = 10;
+            item.useStyle = ItemUseStyleID.HoldingOut;
+            item.noMelee = true;
+            item.knockBack = 0f;
+            item.rare = ItemRarityID.Expert;
+            item.UseSound = SoundID.Item11;
             item.autoReuse = true;
+            item.shoot = ModContent.ProjectileType<BoneProjectile>();
+            item.shootSpeed = 16f;
+            item.useAmmo = ItemID.Bone;
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(0, 14);
         }
     }
 }
