@@ -37,9 +37,25 @@ namespace RealTimeInGameMod.Items
             item.shootSpeed = 16f;
             item.useAmmo = ItemID.Bone;
         }
-        public override Vector2? HoldoutOffset()
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+/*            if (player.position.X > Main.MouseWorld.X)
+            {
+                position += new Vector2(-50, -12);
+            }
+            else if (player.position.X < Main.MouseWorld.X)
+            {
+                position += new Vector2(50, -12);
+            }
+            else
+            {*/
+                position += new Vector2(0, -12);
+/*            }*/
+            return true;
+        }
+/*        public override Vector2? HoldoutOffset()
         {
             return new Vector2(0, 14);
-        }
+        }*/
     }
 }
