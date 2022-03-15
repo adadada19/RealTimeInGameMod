@@ -39,13 +39,13 @@ namespace RealTimeInGameMod.Time
         {
             if (isTimeConverted == false)
             {
-                
+
                 isTimeConverted = true;
                 ModContent.GetInstance<TimeConverter>().TimeConvert(isTimeConverted);
             }
             else if (isTimeConverted)
             {
-                
+
                 isTimeConverted = false;
                 ModContent.GetInstance<TimeConverter>().TimeConvert(isTimeConverted);
             }

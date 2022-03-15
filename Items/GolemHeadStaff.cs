@@ -16,7 +16,7 @@ namespace RealTimeInGameMod.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Golem Head Staff");
+			DisplayName.SetDefault("Golem's Head Staff");
 			Tooltip.SetDefault("Summons ancient one to follow you");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; // projectile lets the player target anywhere on the whole screen while using a controller.
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
@@ -41,7 +41,7 @@ namespace RealTimeInGameMod.Items
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			position = Main.MouseWorld;
+			position = Main.MouseWorld; 
 			player.AddBuff(item.buffType, 2);
 			return true;
 		}

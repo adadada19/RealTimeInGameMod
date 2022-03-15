@@ -25,16 +25,8 @@ namespace RealTimeInGameMod.Projectiles
         }
         public override void AI()
         {
-            if (firstFrame)
-            {
-                firstFrame = false;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
-            }
-            else
-            {
-                projectile.velocity.Y += 0.1f;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
-            }
+            projectile.velocity.Y += 0.1f;
+            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
         }
     }
 }

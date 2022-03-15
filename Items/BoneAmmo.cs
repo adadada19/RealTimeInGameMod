@@ -22,5 +22,11 @@ namespace RealTimeInGameMod.Items
                 item.shoot = ModContent.ProjectileType<BoneProjectile>();// make there bone projectile
             }
         }
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (item.type == ItemID.Bone)
+                return false;
+            return true;
+        }
     }
 }
