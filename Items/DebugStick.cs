@@ -36,7 +36,7 @@ namespace RealTimeInGameMod.Items
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Main.NewText(String.Format("{0}" + "{1}", Main.dayTime, Main.time), Color.Lime);
+            Main.NewText(String.Format("{0}", player.slotsMinions), Color.Lime);
             return false;
         }
     }

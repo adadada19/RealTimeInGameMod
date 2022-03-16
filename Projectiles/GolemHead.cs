@@ -11,8 +11,10 @@ using RealTimeInGameMod.Buffs;
 
 namespace RealTimeInGameMod.Projectiles
 {
+
     class GolemHead : ModProjectile
     {
+        int Timer = new int();
         public override void SetStaticDefaults()
         {
             Main.projPet[projectile.type] = true;
@@ -152,8 +154,19 @@ namespace RealTimeInGameMod.Projectiles
                 float insertsomefloathere = 10f;
                 // use DirectionTo
                 Vector2 velToEnemy = projectile.DirectionTo(targetCenter) * insertsomefloathere;
+                Vector2 GolemLeftEye = new Vector2(projectile.Center.X + 10f, projectile.Center.Y + 10f);
+                Vector2 GolemRightEye = new Vector2(projectile.Center.X + 15f, projectile.Center.Y + 10f);
                 //call proj.newproj from using the velocity to enemy
-                Projectile.NewProjectile(projectile.Center, velToEnemy, /*here spawn laser*/);
+
+                Timer++;
+                if (Timer % 120 == 0)
+                {
+                    Main.PlaySound(SoundID.Item33);
+                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), 15, 0f, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), 15, 0f, projectile.whoAmI);
+                }
+                
+                
             }
         }
         }
