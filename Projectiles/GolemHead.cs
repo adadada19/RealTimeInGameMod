@@ -27,18 +27,24 @@ namespace RealTimeInGameMod.Projectiles
             projectile.minion = true;
             projectile.minionSlots = 1f;
             projectile.penetrate = -1;
-
         }
         public override bool? CanCutTiles()
         {
             return false;
         }
+        public void ProjectileMinionSlots(float MinionSlots)
+        {
+            projectile.minionSlots = MinionSlots;
+        }
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
+            var damage = projectile.damage;
+            var knockBack = projectile.knockBack;
             if (player.dead || !player.active)
             {
                 player.ClearBuff(ModContent.BuffType<GolemHeadBuff>());
+                ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(0f);
             }
             if (player.HasBuff(ModContent.BuffType<GolemHeadBuff>()))
             {
@@ -162,11 +168,28 @@ namespace RealTimeInGameMod.Projectiles
                 if (Timer % 120 == 0)
                 {
                     Main.PlaySound(SoundID.Item33);
-                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), 15, 0f, projectile.whoAmI);
-                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), 15, 0f, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
                 }
-                
-                
+                if (Timer % 615 == 0)
+                {
+                    Main.PlaySound(SoundID.Item33);
+                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                }
+                if (Timer % 630 == 0)
+                {
+                    Main.PlaySound(SoundID.Item33);
+                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                }
+                if (Timer % 645 == 0)
+                {
+                    Main.PlaySound(SoundID.Item33);
+                    Projectile.NewProjectile(GolemLeftEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                    Projectile.NewProjectile(GolemRightEye, velToEnemy, ModContent.ProjectileType<EyeBeam>(), damage, knockBack, projectile.whoAmI);
+                    Timer = 0;
+                }
             }
         }
         }
