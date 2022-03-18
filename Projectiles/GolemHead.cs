@@ -26,15 +26,13 @@ namespace RealTimeInGameMod.Projectiles
             projectile.friendly = true;
             projectile.minion = true;
             projectile.minionSlots = 1f;
+            projectile.damage = 5;
+            projectile.knockBack = 2f;
             projectile.penetrate = -1;
         }
         public override bool? CanCutTiles()
         {
             return false;
-        }
-        public void ProjectileMinionSlots(float MinionSlots)
-        {
-            projectile.minionSlots = MinionSlots;
         }
         public override void AI()
         {
@@ -44,7 +42,9 @@ namespace RealTimeInGameMod.Projectiles
             if (player.dead || !player.active)
             {
                 player.ClearBuff(ModContent.BuffType<GolemHeadBuff>());
-                ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(0f);
+                projectile.minionSlots = 1f;
+                projectile.damage = 5;
+                projectile.knockBack = 2f;
             }
             if (player.HasBuff(ModContent.BuffType<GolemHeadBuff>()))
             {

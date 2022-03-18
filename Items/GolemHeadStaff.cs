@@ -14,22 +14,22 @@ namespace RealTimeInGameMod.Items
 {
 	class MinionCheck : ModPlayer
     {
-		public float MinionSlotsUsed = 0f;
+		public float MinionSlotsUsed = new float();
 		public override void PostUpdateMiscEffects()
 		{
 			MinionSlotsUsed = player.slotsMinions;
-			Main.NewText(player.slotsMinions, Color.Green);
+			//Main.NewText(player.slotsMinions, Color.Green);
 		}
 		
-		public void MinionSlots(float MinionSlots)
+		/*public void MinionSlots(float MinionSlots)
         {
-			MinionSlots = player.slotsMinions;
-        }
+			MinionSlots = MinionSlotsUsed;
+        }*/
     }
 	class GolemHeadStaff : ModItem
 	{
-		public float SlotsMinions = 0f;
-		public override void SetStaticDefaults()
+        bool isHeadAlive = false;
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Golem's Head Staff");
 			Tooltip.SetDefault("Summons ancient one to follow you");
@@ -56,103 +56,38 @@ namespace RealTimeInGameMod.Items
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			position = Main.MouseWorld;
-			bool isHeadAlive = false;
-			for (int i = 0; i < 1000; i++)
+            //float SlotsMinions = 0f;
+            position = Main.MouseWorld;
+            //Projectile p = Main.projectile[i];
+            if (Main.projectile.Any(x => x.active && x.type == ModContent.ProjectileType<GolemHead>()) && isHeadAlive) //we are good - adjust position
             {
-				Projectile p = Main.projectile[i];
-				if (p.type == ModContent.ProjectileType<GolemHead>())
+                var adjList = Main.projectile.Where(x => x.type == ModContent.ProjectileType<GolemHead>() && x.modProjectile is GolemHead);
+                var minion = adjList.FirstOrDefault();
+                if (minion != null)
                 {
-					isHeadAlive = true;
-					ModContent.GetInstance<MinionCheck>().MinionSlots(SlotsMinions);
-					switch (SlotsMinions)
+                    if (player.GetModPlayer<MinionCheck>().MinionSlotsUsed < player.maxMinions)
                     {
-						case 0f:
-                            {
-								item.damage = 20;
-								item.knockBack = 3f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(1f);
-								break;
-                            }
-						case 1f:
-                            {
-								item.damage = 25;
-								item.knockBack = 3.5f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(2f);
-								break;
-                            }
-						case 2f:
-                            {
-								item.damage = 30;
-								item.knockBack = 4f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(3f);
-								break;
-                            }
-						case 3f:
-                            {
-								item.damage = 35;
-								item.knockBack = 4.5f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(4f);
-								break;
-                            }
-						case 4f:
-							{
-								item.damage = 40;
-								item.knockBack = 5f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(5f);
-								break;
-							}
-						case 5f:
-							{
-								item.damage = 45;
-								item.knockBack = 5.5f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(6f);
-								break;
-							}
-						case 6f:
-							{
-								item.damage = 50;
-								item.knockBack = 6f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(7f);
-								break;
-							}
-						case 7f:
-							{
-								item.damage = 55;
-								item.knockBack = 6.5f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(8f);
-								break;
-							}
-						case 8f:
-							{
-								item.damage = 60;
-								item.knockBack = 7f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(9f);
-								break;
-							}
-						case 9f:
-							{
-								item.damage = 65;
-								item.knockBack = 7f;
-								ModContent.GetInstance<GolemHead>().ProjectileMinionSlots(10f);
-								break;
-							}
-						case 10f:
-							{
-								item.damage = 80;
-								item.knockBack = 7f;
-								break;
-							}
-					}
+                        minion.minionSlots++;
+                        minion.damage += 5;
+                        minion.knockBack += 0.5f;
+                        Main.NewText(player.GetModPlayer<MinionCheck>().MinionSlotsUsed, Color.Lime);
+                        Main.NewText(player.maxMinions, Color.Lime);
+                    }
                 }
-				if (!isHeadAlive)
-                {
-					Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<GolemHead>(), damage, knockBack, player.whoAmI);
-					isHeadAlive = true;
-				}
             }
+            else
+            {
+				isHeadAlive = false;
+            }
+			if (!isHeadAlive)
+			{
+				Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<GolemHead>(), damage, knockBack, player.whoAmI);
+				isHeadAlive = true;
+				Main.NewText("Projectile need to be spawned", Color.Lime);
+			}
 			player.AddBuff(item.buffType, 2);
 			return false;
+
 		}
 	}
 }
