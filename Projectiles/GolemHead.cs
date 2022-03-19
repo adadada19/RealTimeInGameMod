@@ -26,7 +26,7 @@ namespace RealTimeInGameMod.Projectiles
             projectile.friendly = true;
             projectile.minion = true;
             projectile.minionSlots = 1f;
-            projectile.damage = 5;
+            projectile.damage = 10;
             projectile.knockBack = 2f;
             projectile.penetrate = -1;
         }
@@ -50,6 +50,7 @@ namespace RealTimeInGameMod.Projectiles
             {
                 projectile.timeLeft = 2;
             }
+            projectile.spriteDirection = projectile.direction;
             Vector2 idlePosition = player.Center;
             idlePosition.Y -= 48f;
             float minionPositionOffsetX = (10 + projectile.minionPos * 40) * -player.direction;

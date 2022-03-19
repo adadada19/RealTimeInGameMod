@@ -18,13 +18,7 @@ namespace RealTimeInGameMod.Items
 		public override void PostUpdateMiscEffects()
 		{
 			MinionSlotsUsed = player.slotsMinions;
-			//Main.NewText(player.slotsMinions, Color.Green);
 		}
-		
-		/*public void MinionSlots(float MinionSlots)
-        {
-			MinionSlots = MinionSlotsUsed;
-        }*/
     }
 	class GolemHeadStaff : ModItem
 	{
@@ -58,32 +52,31 @@ namespace RealTimeInGameMod.Items
 		{
             //float SlotsMinions = 0f;
             position = Main.MouseWorld;
-            //Projectile p = Main.projectile[i];
-            if (Main.projectile.Any(x => x.active && x.type == ModContent.ProjectileType<GolemHead>()) && isHeadAlive) //we are good - adjust position
-            {
-                var adjList = Main.projectile.Where(x => x.type == ModContent.ProjectileType<GolemHead>() && x.modProjectile is GolemHead);
-                var minion = adjList.FirstOrDefault();
-                if (minion != null)
-                {
-                    if (player.GetModPlayer<MinionCheck>().MinionSlotsUsed < player.maxMinions)
-                    {
-                        minion.minionSlots++;
-                        minion.damage += 5;
-                        minion.knockBack += 0.5f;
-                        Main.NewText(player.GetModPlayer<MinionCheck>().MinionSlotsUsed, Color.Lime);
-                        Main.NewText(player.maxMinions, Color.Lime);
-                    }
-                }
-            }
-            else
-            {
+			//Projectile p = Main.projectile[i];
+			if (Main.projectile.Any(x => x.active && x.type == ModContent.ProjectileType<GolemHead>()) && isHeadAlive) //we are good - adjust position
+			{
+				var adjList = Main.projectile.Where(x => x.type == ModContent.ProjectileType<GolemHead>() && x.modProjectile is GolemHead);
+				var minion = adjList.FirstOrDefault();
+				if (minion != null)
+				{
+					if (player.GetModPlayer<MinionCheck>().MinionSlotsUsed < player.maxMinions -1)
+					{
+						minion.minionSlots++;
+						minion.damage += 7;
+						minion.knockBack += 0.5f;
+						minion.active = true;
+						Main.NewText("Huy", Color.Red);
+					}
+				}
+			}
+			else
+			{
 				isHeadAlive = false;
-            }
+			}
 			if (!isHeadAlive)
 			{
 				Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<GolemHead>(), damage, knockBack, player.whoAmI);
 				isHeadAlive = true;
-				Main.NewText("Projectile need to be spawned", Color.Lime);
 			}
 			player.AddBuff(item.buffType, 2);
 			return false;
