@@ -53,13 +53,13 @@ namespace RealTimeInGameMod.Items
             //float SlotsMinions = 0f;
             position = Main.MouseWorld;
 			//Projectile p = Main.projectile[i];
-			if (Main.projectile.Any(x => x.active && x.type == ModContent.ProjectileType<GolemHead>()) && isHeadAlive) //we are good - adjust position
+			if (Main.projectile.Any(x => x.active && x.type == ModContent.ProjectileType<GolemHead>() && x.owner == player.whoAmI) && isHeadAlive) //we are good - adjust position
 			{
 				var adjList = Main.projectile.Where(x => x.type == ModContent.ProjectileType<GolemHead>() && x.modProjectile is GolemHead);
 				var minion = adjList.FirstOrDefault();
 				if (minion != null)
 				{
-					if (player.GetModPlayer<MinionCheck>().MinionSlotsUsed < player.maxMinions -1)
+					if (player.GetModPlayer<MinionCheck>().MinionSlotsUsed < player.maxMinions - 1)
 					{
 						minion.minionSlots++;
 						minion.damage += 7;
