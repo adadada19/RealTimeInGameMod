@@ -40,7 +40,8 @@ namespace RealTimeInGameMod.Items
             var oldVelocity2 = new Vector2(player.Center.X - Main.MouseWorld.X, player.Center.Y - Main.MouseWorld.Y);
             var oldVelocity1 = Vector2.Negate(oldVelocity2);
             var velocity = Vector2.Normalize(oldVelocity1) * 5f;
-            Projectile.NewProjectile(position, velocity, ModContent.ProjectileType<DetonatingBubble>(), damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, velocity, ModContent.ProjectileType<DetonatingBubble1>(), damage, knockBack, player.whoAmI);
+            Main.PlaySound(SoundID.Splash, position, 1);
             return false;
         }
     }
